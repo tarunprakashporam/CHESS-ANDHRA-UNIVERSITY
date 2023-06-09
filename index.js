@@ -8,11 +8,9 @@ const USERS = [];
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 
 app.post('/signup', function(req, res) {
     const { email, password } = req.body;
@@ -29,10 +27,10 @@ app.post('/signup', function(req, res) {
 
 app.post('/login', function(req, res) {
     const { email, password } = req.body;
-    const user = USERS.some(user => user.email === email);
+    const user = USERS.find(user => user.email === email);
 
     if (user) {
-        if (user.password == password) {
+        if (user.password === password) {
             const token = generateRandomToken();
             res.status(200).json({ token: token, message: "Login successful" });
         } else {
@@ -46,3 +44,8 @@ app.post('/login', function(req, res) {
 app.listen(port, function() {
     console.log(`Example app listening on port ${port}`);
 });
+
+function generateRandomToken() {
+    // Generate a random token logic goes here
+    // Return the generated token
+}
